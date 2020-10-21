@@ -79,7 +79,7 @@ public class EksamenSBinTre<T> {
     public boolean tom() {
         return antall == 0;
     }
-
+    // oppgave 1 - finished
     public boolean leggInn(T verdi) {
 
         // Kode hentet fra Programkode 5.2.3 a), fra kompendium av Ulf Utterud
@@ -117,9 +117,15 @@ public class EksamenSBinTre<T> {
     public int fjernAlle(T verdi) {
         throw new UnsupportedOperationException("Ikke kodet ennå!");
     }
-
+    // Oppgave 2
     public int antall(T verdi) {
-        throw new UnsupportedOperationException("Ikke kodet ennå!");
+        //throw new UnsupportedOperationException("Ikke kodet ennå!");
+        int count = 0;
+        if (this.inneholder(verdi)){
+            count++;
+        }
+        return count;
+
     }
 
     public void nullstill() {
