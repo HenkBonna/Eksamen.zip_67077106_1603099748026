@@ -148,39 +148,30 @@ public class EksamenSBinTre<T> {
     }
     // Oppgave 3 i)
     private static <T> Node<T> førstePostorden(Node<T> p) {
-        // Solved recursively.
 
-        //check if left first
-        if (p.venstre != null){
-            førstePostorden(p.venstre);
+        // Kildekode hentet fra Kompendium: Programkode 5.1.7 h)
+        while (true){
+            if (p.venstre != null) p = p.venstre;
+            else if(p.høyre != null) p = p.høyre;
+            else return p;
         }
-        // then right
-        else if(p.høyre != null){
-            førstePostorden(p.høyre);
-        }
-        // then if none
-        return p;
     }
-    // Oppgave 3 ii)
+    // "Oversatt" beskrivelse fra kompendium til kode
     private static <T> Node<T> nestePostorden(Node<T> p) {
-        //throw new UnsupportedOperationException("Ikke kodet ennå!");
-        //check if left first
-        if (p.venstre != null){
-            return førstePostorden(p.venstre);
-        }
-        // then right
-        else if(p.høyre != null){
-            return førstePostorden(p.høyre);
-        }
-        // then if none
-        else {
-            if (p.forelder != null){
-                return førstePostorden(p.forelder);
-            }
-            else{
-                return null;
+        // Sjekker først om forelderen er null, da er vi på siste, og neste fins ikke.
+        if (p.forelder != null) {
+            // Hvis p er høyre barn, er forelderen neste.
+            if (p.forelder.høyre == p) return p.forelder;
+            // Hvis p er venstre barn
+            else if(p.forelder.venstre == p){
+                // Hvis venstrebarn er enebarn, er forelder neste
+                if (p.forelder.høyre == null) return p.forelder;
+                // Ellers er neste førstePostOrden til forelders høyrebarn
+                else return førstePostorden(p.forelder.høyre);
             }
         }
+        // Hvis alle over feiler, er forelder lik 'null', så vi har ingen neste.
+        return null;
     }
 
     public void postorden(Oppgave<? super T> oppgave) {
