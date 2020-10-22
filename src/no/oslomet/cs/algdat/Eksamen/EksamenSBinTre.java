@@ -117,7 +117,7 @@ public class EksamenSBinTre<T> {
     public int fjernAlle(T verdi) {
         throw new UnsupportedOperationException("Ikke kodet ennå!");
     }
-    // Oppgave 2
+    // Oppgave 2 – needs more Main-tests
     public int antall(T verdi) {
         //throw new UnsupportedOperationException("Ikke kodet ennå!");
         int count = 0;
@@ -130,12 +130,12 @@ public class EksamenSBinTre<T> {
 
             // if the comparison returns that verdi < current.verdi, we go left
             if (compRes < 0){
-                current = current.venstre;
+                current = current.venstre; // iterate downwards
             }
             // if the comparison returns that verdi >= current.verdi, we go right
             if (compRes >= 0){
                 if (current.verdi == verdi) count++;    // we check if the current val is equal, if so add to count
-                current = current.høyre;
+                current = current.høyre;    // iterate down
             }
         }
 
@@ -146,13 +146,41 @@ public class EksamenSBinTre<T> {
     public void nullstill() {
         throw new UnsupportedOperationException("Ikke kodet ennå!");
     }
-
+    // Oppgave 3 i)
     private static <T> Node<T> førstePostorden(Node<T> p) {
-        throw new UnsupportedOperationException("Ikke kodet ennå!");
-    }
+        // Solved recursively.
 
+        //check if left first
+        if (p.venstre != null){
+            førstePostorden(p.venstre);
+        }
+        // then right
+        else if(p.høyre != null){
+            førstePostorden(p.høyre);
+        }
+        // then if none
+        return p;
+    }
+    // Oppgave 3 ii)
     private static <T> Node<T> nestePostorden(Node<T> p) {
-        throw new UnsupportedOperationException("Ikke kodet ennå!");
+        //throw new UnsupportedOperationException("Ikke kodet ennå!");
+        //check if left first
+        if (p.venstre != null){
+            return førstePostorden(p.venstre);
+        }
+        // then right
+        else if(p.høyre != null){
+            return førstePostorden(p.høyre);
+        }
+        // then if none
+        else {
+            if (p.forelder != null){
+                return førstePostorden(p.forelder);
+            }
+            else{
+                return null;
+            }
+        }
     }
 
     public void postorden(Oppgave<? super T> oppgave) {
