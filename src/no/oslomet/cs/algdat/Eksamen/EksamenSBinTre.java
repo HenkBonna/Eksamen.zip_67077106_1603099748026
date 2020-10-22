@@ -121,9 +121,24 @@ public class EksamenSBinTre<T> {
     public int antall(T verdi) {
         //throw new UnsupportedOperationException("Ikke kodet ennå!");
         int count = 0;
-        if (this.inneholder(verdi)){
-            count++;
+
+        Node<T> current = rot;
+
+        while (current != null){
+            // comparing the values
+            int compRes = comp.compare(verdi, current.verdi);
+
+            // if the comparison returns that verdi < current.verdi, we go left
+            if (compRes < 0){
+                current = current.venstre;
+            }
+            // if the comparison returns that verdi >= current.verdi, we go right
+            if (compRes >= 0){
+                if (current.verdi == verdi) count++;    // we check if the current val is equal, if so add to count
+                current = current.høyre;
+            }
         }
+
         return count;
 
     }
