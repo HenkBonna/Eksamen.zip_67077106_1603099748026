@@ -146,7 +146,7 @@ public class EksamenSBinTre<T> {
     public void nullstill() {
         throw new UnsupportedOperationException("Ikke kodet ennå!");
     }
-    // Oppgave 3 i)
+    // Oppgave 3 i) finished
     private static <T> Node<T> førstePostorden(Node<T> p) {
 
         // Kildekode hentet fra Kompendium: Programkode 5.1.7 h)
@@ -156,8 +156,9 @@ public class EksamenSBinTre<T> {
             else return p;
         }
     }
-    // "Oversatt" beskrivelse fra kompendium til kode
+    // Oppgave 3 ii) finished
     private static <T> Node<T> nestePostorden(Node<T> p) {
+        // "Oversatt" beskrivelse fra kompendium til kode
         // Sjekker først om forelderen er null, da er vi på siste, og neste fins ikke.
         if (p.forelder != null) {
             // Hvis p er høyre barn, er forelderen neste.
@@ -173,9 +174,22 @@ public class EksamenSBinTre<T> {
         // Hvis alle over feiler, er forelder lik 'null', så vi har ingen neste.
         return null;
     }
-
+    // Oppgave 4 i)
     public void postorden(Oppgave<? super T> oppgave) {
-        throw new UnsupportedOperationException("Ikke kodet ennå!");
+        // Skal løses ikke-rekursivt, og skal bruke nestePostorden
+        Node<T> current = rot;
+        // Gjør 'oppgave' på rot
+        oppgave.utførOppgave(current.verdi);
+        // Hopper ett steg – gjør dette før whileLøkken, slik at
+
+        current = nestePostorden(current);
+        while(current.forelder != null){
+            oppgave.utførOppgave(current.verdi);
+            current = nestePostorden(current);
+        }
+        // Gjør oppgaven på siste node
+        oppgave.utførOppgave(current.verdi);
+
     }
 
     public void postordenRecursive(Oppgave<? super T> oppgave) {
