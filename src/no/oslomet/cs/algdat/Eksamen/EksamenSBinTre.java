@@ -218,11 +218,23 @@ public class EksamenSBinTre<T> {
 
 
 
-        // 1. Call itself
-        // 2. Simplify arguments
-        // 3. Change in base-case
+
+        if (p.forelder != null) {
+            oppgave.utførOppgave(p.verdi);
+            if (nestePostorden(p) != rot) {
+                postordenRecursive(nestePostorden(p), oppgave);
+            }
+            else {
+                oppgave.utførOppgave(rot.verdi);
+            }
+
+        } else {
+            postordenRecursive(førstePostorden(p), oppgave);
+            //oppgave.utførOppgave(p.verdi);
+        }
 
 
+        /* Working, but looping after doing it.
         if(p.forelder != null){
             oppgave.utførOppgave(p.verdi);
             postordenRecursive(nestePostorden(p),oppgave);
@@ -232,6 +244,8 @@ public class EksamenSBinTre<T> {
             postordenRecursive(førstePostorden(p),oppgave);
             //oppgave.utførOppgave(p.verdi);
         }
+         */
+
         /* Working, but looping after doing it.
         if(p.forelder == null){
             postordenRecursive(førstePostorden(p),oppgave);
