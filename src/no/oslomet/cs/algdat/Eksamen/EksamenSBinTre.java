@@ -156,7 +156,7 @@ public class EksamenSBinTre<T> {
             else return p;
         }
     }
-    // Oppgave 3 ii) thought finished, not working properly it seems...
+    // Oppgave 3 ii) thought finished, unsure if working...
     private static <T> Node<T> nestePostorden(Node<T> p) {
         // "Oversatt" beskrivelse fra kompendium til kode
         // Sjekker først om forelderen er null, da er vi på siste, og neste fins ikke.
@@ -179,42 +179,33 @@ public class EksamenSBinTre<T> {
         // Hvis alle over feiler, er forelder lik 'null', så vi har ingen neste.
         return null;
     }
-    // Oppgave 4 i) untested, not working
+    // Oppgave 4 i) seems to be working
     public void postorden(Oppgave<? super T> oppgave) {
 
 
-        throw new UnsupportedOperationException("Ikke kodet ennå!");
-/*
+        //throw new UnsupportedOperationException("Ikke kodet ennå!");
+
         // Skal løses ikke-rekursivt, og skal bruke nestePostorden
 
-        Node<T> current = rot;
+        // Finner startNoden, vha. førstePostOrden
+        Node<T> current = førstePostorden(rot);
 
-        // Gjør 'oppgave' på rot
+        // Gjør 'oppgave' på førstePostorden
+        oppgave.utførOppgave(current.verdi);
 
-        if (current != null) {
-            oppgave.utførOppgave(current.verdi);
-
-            // Hopper ett steg før whileløkken
-
+        // While løkke som utføres frem til den når rot-noden (node uten forelder)
+        while (current.forelder != null) {
             current = nestePostorden(current);
-            if (current != null) {
+            oppgave.utførOppgave(current.verdi);
+        }
 
-                while (current.forelder != null) {
 
-                    current = nestePostorden(current);
+        // Utfører oppgaven på rotnoden. REMOVING THIS SEEMS TO FIX IT
+        //oppgave.utførOppgave(current.verdi);
 
-                    if(current != null) {
-                        oppgave.utførOppgave(current.verdi);
-                    }
-
-                }
-                oppgave.utførOppgave(current.verdi);
-
-            }
 
             // Gjør oppgaven på siste node
-        }
-*/
+
 
     }
 
@@ -223,31 +214,42 @@ public class EksamenSBinTre<T> {
     }
     // Oppgave 4 ii) not working.
     private void postordenRecursive(Node<T> p, Oppgave<? super T> oppgave) {
-        throw new UnsupportedOperationException("Ikke kodet ennå!");
+        //throw new UnsupportedOperationException("Ikke kodet ennå!");
 
-        /*
+
 
         // 1. Call itself
         // 2. Simplify arguments
         // 3. Change in base-case
-        // Første
 
 
-        oppgave.utførOppgave(p.verdi);
         if(p.forelder != null){
-
+            oppgave.utførOppgave(p.verdi);
             postordenRecursive(nestePostorden(p),oppgave);
         }
 
         else{
-            oppgave.utførOppgave(p.verdi);
+            postordenRecursive(førstePostorden(p),oppgave);
+            //oppgave.utførOppgave(p.verdi);
+        }
+        /* Working, but looping after doing it.
+        if(p.forelder == null){
+            postordenRecursive(førstePostorden(p),oppgave);
+            //oppgave.utførOppgave(p.verdi);
         }
 
+        else{
+            oppgave.utførOppgave(p.verdi);
+            postordenRecursive(nestePostorden(p),oppgave);
+        }
 
          */
 
-    }
 
+
+
+    }
+    // 5i) unsure if working..
     public ArrayList<T> serialize() {
         //throw new UnsupportedOperationException("Ikke kodet ennå!");
 
@@ -276,9 +278,15 @@ public class EksamenSBinTre<T> {
         }
         return outArray;
     }
-
+    // 5ii)
     static <K> EksamenSBinTre<K> deserialize(ArrayList<K> data, Comparator<? super K> c) {
-        throw new UnsupportedOperationException("Ikke kodet ennå!");
+        //throw new UnsupportedOperationException("Ikke kodet ennå!");
+        EksamenSBinTre<K> out = new EksamenSBinTre<K>(c);
+        //out.rot = new Node<K>(data.get(0), null, null, null);
+        for (K value : data){
+            out.leggInn(value);
+        }
+        return out;
     }
 
 
