@@ -16,5 +16,12 @@ Se oblig-tekst for alle krav, og husk spesielt på følgende:
 
 Vi har brukt git til å dokumentere arbeidet vårt. Jeg har 16 commits totalt, og hver logg-melding beskriver det jeg har gjort av endringer.
 
-* Oppgave 1: Løste ved å implementere ...
+* Oppgave 1: Løste ved å kopiere den gitte kildekoden fra kompendiet; Programkode 5.2.3 a). Måtte bare sørge for at noden 
+også fikk en foreldre peker.
 * Oppgave 2: ...
+* Oppgave 3:
+* Oppgave 4: Denne tok en del tid å debugge. Måtte finne en løsning for å avslutte rekursjonen, da den også må fungere 
+for rot-noden. Å sjekke om nåværende node er rot, er dermed ikke et punkt man kan ende på. Gjorde derfor rekursjon bare 
+frem til man befant seg på nest siste node. 
+* Oppgave 5:
+* Oppgave 6:

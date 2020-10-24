@@ -18,8 +18,8 @@ public class Main {
 		System.out.println(tre.antall()); // Utskrift: 10
 		 */
 
-		// Oppgave 3
-		/*
+		// Oppgave 2
+
 		Integer[] a = {4,7,2,9,4,10,8,7,4,6};
 		EksamenSBinTre<Integer> tre = new EksamenSBinTre<>(Comparator.naturalOrder());
 		for (int verdi : a) tre.leggInn(verdi);
@@ -29,9 +29,15 @@ public class Main {
 		System.out.println(tre.antall(7)); // Utskrift: 2
 		System.out.println(tre.antall(10)); // Utskrift: 1
 
-		 */
+		System.out.println();
+
+		Integer[] b = {5,5,5,5,5,5,5,5,6};
+		EksamenSBinTre<Integer> tre2 = new EksamenSBinTre<>(Comparator.naturalOrder());
+		for (int verdi : b) tre2.leggInn(verdi);
+		System.out.println(tre2.antall());
 
 		//Oppgave 5
+		/*
 		Integer[] a = {1,3,5,7,9,2,4,6,8};
 		EksamenSBinTre<Integer> tre = new EksamenSBinTre<>(Comparator.naturalOrder());
 		for (int verdi : a) tre.leggInn(verdi);
@@ -48,6 +54,8 @@ public class Main {
 		for (Integer i : out){
 			System.out.print(i + ", ");
 		}
+
+		 */
 
 
 		//

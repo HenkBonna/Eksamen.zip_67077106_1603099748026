@@ -216,21 +216,24 @@ public class EksamenSBinTre<T> {
     private void postordenRecursive(Node<T> p, Oppgave<? super T> oppgave) {
         //throw new UnsupportedOperationException("Ikke kodet ennå!");
 
+        // Hvis vi befinner oss i rot, rekurserer vi med førstePostorden.
+        if (p.forelder == null){
+            postordenRecursive(førstePostorden(p), oppgave);
+        }
 
-
-
-        if (p.forelder != null) {
+        else {
+            // Utfører oppgaven.
             oppgave.utførOppgave(p.verdi);
+            // Dersom neste ikke er rot, rekurserer vi.
             if (nestePostorden(p) != rot) {
                 postordenRecursive(nestePostorden(p), oppgave);
             }
+            // Ellers befinner vi oss på nest-siste node. Har allerede har utført oppgaven for denne.
             else {
+                // Mangler derfor bare å utføre oppgaven på siste node (rot-noden) før vi kan slutte
                 oppgave.utførOppgave(rot.verdi);
             }
 
-        } else {
-            postordenRecursive(førstePostorden(p), oppgave);
-            //oppgave.utførOppgave(p.verdi);
         }
 
 
