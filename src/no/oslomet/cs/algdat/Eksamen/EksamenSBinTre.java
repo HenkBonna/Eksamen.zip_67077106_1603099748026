@@ -174,7 +174,7 @@ public class EksamenSBinTre<T> {
         // Hvis alle over feiler, er forelder lik 'null', så vi har ingen neste.
         return null;
     }
-    // Oppgave 4 i)
+    // Oppgave 4 i) untested
     public void postorden(Oppgave<? super T> oppgave) {
         // Skal løses ikke-rekursivt, og skal bruke nestePostorden
         Node<T> current = rot;
@@ -183,6 +183,7 @@ public class EksamenSBinTre<T> {
         // Hopper ett steg – gjør dette før whileLøkken, slik at
 
         current = nestePostorden(current);
+        assert current != null;
         while(current.forelder != null){
             oppgave.utførOppgave(current.verdi);
             current = nestePostorden(current);
@@ -195,9 +196,25 @@ public class EksamenSBinTre<T> {
     public void postordenRecursive(Oppgave<? super T> oppgave) {
         postordenRecursive(rot, oppgave);
     }
-
+    // Oppgave 4 ii)
     private void postordenRecursive(Node<T> p, Oppgave<? super T> oppgave) {
-        throw new UnsupportedOperationException("Ikke kodet ennå!");
+
+        // 1. Call itself
+        // 2. Simplify arguments
+        // 3. Change in base-case
+
+        // Første
+        oppgave.utførOppgave(p.verdi);
+
+        if(p.forelder != null){
+            postordenRecursive(nestePostorden(p),oppgave);
+        }
+
+        if(p.forelder == null){
+
+        }
+
+
     }
 
     public ArrayList<T> serialize() {
