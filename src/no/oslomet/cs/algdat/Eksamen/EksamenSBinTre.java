@@ -156,10 +156,15 @@ public class EksamenSBinTre<T> {
             else return p;
         }
     }
-    // Oppgave 3 ii) finished
+    // Oppgave 3 ii) thought finished, not working properly it seems...
     private static <T> Node<T> nestePostorden(Node<T> p) {
         // "Oversatt" beskrivelse fra kompendium til kode
         // Sjekker først om forelderen er null, da er vi på siste, og neste fins ikke.
+
+        // TODO: Error here: rot => forelder as null, not executed
+
+
+        //
         if (p.forelder != null) {
             // Hvis p er høyre barn, er forelderen neste.
             if (p.forelder.høyre == p) return p.forelder;
@@ -174,51 +179,102 @@ public class EksamenSBinTre<T> {
         // Hvis alle over feiler, er forelder lik 'null', så vi har ingen neste.
         return null;
     }
-    // Oppgave 4 i) untested
+    // Oppgave 4 i) untested, not working
     public void postorden(Oppgave<? super T> oppgave) {
-        // Skal løses ikke-rekursivt, og skal bruke nestePostorden
-        Node<T> current = rot;
-        // Gjør 'oppgave' på rot
-        oppgave.utførOppgave(current.verdi);
-        // Hopper ett steg – gjør dette før whileLøkken, slik at
 
-        current = nestePostorden(current);
-        assert current != null;
-        while(current.forelder != null){
+
+        throw new UnsupportedOperationException("Ikke kodet ennå!");
+/*
+        // Skal løses ikke-rekursivt, og skal bruke nestePostorden
+
+        Node<T> current = rot;
+
+        // Gjør 'oppgave' på rot
+
+        if (current != null) {
             oppgave.utførOppgave(current.verdi);
+
+            // Hopper ett steg før whileløkken
+
             current = nestePostorden(current);
+            if (current != null) {
+
+                while (current.forelder != null) {
+
+                    current = nestePostorden(current);
+
+                    if(current != null) {
+                        oppgave.utførOppgave(current.verdi);
+                    }
+
+                }
+                oppgave.utførOppgave(current.verdi);
+
+            }
+
+            // Gjør oppgaven på siste node
         }
-        // Gjør oppgaven på siste node
-        oppgave.utførOppgave(current.verdi);
+*/
 
     }
 
     public void postordenRecursive(Oppgave<? super T> oppgave) {
         postordenRecursive(rot, oppgave);
     }
-    // Oppgave 4 ii)
+    // Oppgave 4 ii) not working.
     private void postordenRecursive(Node<T> p, Oppgave<? super T> oppgave) {
+        throw new UnsupportedOperationException("Ikke kodet ennå!");
+
+        /*
 
         // 1. Call itself
         // 2. Simplify arguments
         // 3. Change in base-case
-
         // Første
-        oppgave.utførOppgave(p.verdi);
 
+
+        oppgave.utførOppgave(p.verdi);
         if(p.forelder != null){
+
             postordenRecursive(nestePostorden(p),oppgave);
         }
 
-        if(p.forelder == null){
-
+        else{
+            oppgave.utførOppgave(p.verdi);
         }
 
+
+         */
 
     }
 
     public ArrayList<T> serialize() {
-        throw new UnsupportedOperationException("Ikke kodet ennå!");
+        //throw new UnsupportedOperationException("Ikke kodet ennå!");
+
+        // Denne oppgaven ble løst ved å se notater fra en av forelesningene, som omhandlet in-, pre- og postoreden.
+
+        // Initialiserer ArrayListen
+        ArrayList<T> outArray = new ArrayList<>();
+        // Vi bruker en ArrayDeque, som lagrer noder i en dobbeltsidig kø
+        ArrayDeque<Node<T>> dq = new ArrayDeque<>();
+        // Legger til roten først i køen
+        dq.addFirst(rot);
+        // Looper gjennom deque'en helt til den er tom <=> alle elementene er gjennomgått
+        while (!dq.isEmpty()){
+            // Tar den overste fra deque'en, og setter den som current.
+            Node<T> current = dq.removeLast();
+            // Dersom venstre ikke er null, legger vi først den til deque'en
+            if (current.venstre != null) {
+                dq.addLast(current.venstre);
+            }
+            // Dersom høyre ikke er null, legger vi deretter den til deque'en
+            if (current.høyre != null) {
+                dq.addLast(current.høyre);
+            }
+            // Legger verdien til current i ArrayList'a
+            outArray.add(current.verdi);
+        }
+        return outArray;
     }
 
     static <K> EksamenSBinTre<K> deserialize(ArrayList<K> data, Comparator<? super K> c) {
