@@ -212,7 +212,7 @@ public class EksamenSBinTre<T> {
     public void postordenRecursive(Oppgave<? super T> oppgave) {
         postordenRecursive(rot, oppgave);
     }
-    // Oppgave 4 ii) not working.
+    // Oppgave 4 ii) seems to be working
     private void postordenRecursive(Node<T> p, Oppgave<? super T> oppgave) {
         //throw new UnsupportedOperationException("Ikke kodet ennå!");
 
@@ -280,8 +280,8 @@ public class EksamenSBinTre<T> {
         dq.addFirst(rot);
         // Looper gjennom deque'en helt til den er tom <=> alle elementene er gjennomgått
         while (!dq.isEmpty()){
-            // Tar den overste fra deque'en, og setter den som current.
-            Node<T> current = dq.removeLast();
+            // Tar den øverste fra deque'en, og setter den som current.
+            Node<T> current = dq.removeFirst();
             // Dersom venstre ikke er null, legger vi først den til deque'en
             if (current.venstre != null) {
                 dq.addLast(current.venstre);
@@ -293,6 +293,14 @@ public class EksamenSBinTre<T> {
             // Legger verdien til current i ArrayList'a
             outArray.add(current.verdi);
         }
+        // debug
+        System.out.println();
+        for (T node : outArray){
+            System.out.print(node + ", ");
+        }
+        System.out.println();
+
+        ///
         return outArray;
     }
     // 5ii)
