@@ -109,9 +109,47 @@ public class EksamenSBinTre<T> {
 
 
     }
-
+    // 6i) IKKE gjort noen endringer enda. Foreldrepeker,
     public boolean fjern(T verdi) {
-        throw new UnsupportedOperationException("Ikke kodet ennå!");
+        // Kopiert fra kompendium; Programkode 5.2.8 d)
+
+        if (verdi == null) return false;  // treet har ingen nullverdier
+
+        Node<T> p = rot, q = null;   // q skal være forelder til p
+
+        while (p != null)            // leter etter verdi
+        {
+            int cmp = comp.compare(verdi,p.verdi);      // sammenligner
+            if (cmp < 0) { q = p; p = p.venstre; }      // går til venstre
+            else if (cmp > 0) { q = p; p = p.høyre; }   // går til høyre
+            else break;    // den søkte verdien ligger i p
+        }
+        if (p == null) return false;   // finner ikke verdi
+
+        if (p.venstre == null || p.høyre == null)  // Tilfelle 1) og 2)
+        {
+            Node<T> b = p.venstre != null ? p.venstre : p.høyre;  // b for barn
+            if (p == rot) rot = b;
+            else if (p == q.venstre) q.venstre = b;
+            else q.høyre = b;
+        }
+        else  // Tilfelle 3)
+        {
+            Node<T> s = p, r = p.høyre;   // finner neste i inorden
+            while (r.venstre != null)
+            {
+                s = r;    // s er forelder til r
+                r = r.venstre;
+            }
+
+            p.verdi = r.verdi;   // kopierer verdien i r til p
+
+            if (s != p) s.venstre = r.høyre;
+            else s.høyre = r.høyre;
+        }
+
+        antall--;   // det er nå én node mindre i treet
+        return true;
     }
 
     public int fjernAlle(T verdi) {
@@ -266,10 +304,8 @@ public class EksamenSBinTre<T> {
 
 
     }
-    // 5i) unsure if working..
+    // 5i) seeems to be working fine.
     public ArrayList<T> serialize() {
-        //throw new UnsupportedOperationException("Ikke kodet ennå!");
-
         // Denne oppgaven ble løst ved å se notater fra en av forelesningene, som omhandlet in-, pre- og postoreden.
 
         // Initialiserer ArrayListen
@@ -280,7 +316,7 @@ public class EksamenSBinTre<T> {
         dq.addFirst(rot);
         // Looper gjennom deque'en helt til den er tom <=> alle elementene er gjennomgått
         while (!dq.isEmpty()){
-            // Tar den øverste fra deque'en, og setter den som current.
+            // Tar den første fra deque'en, og setter den som current.
             Node<T> current = dq.removeFirst();
             // Dersom venstre ikke er null, legger vi først den til deque'en
             if (current.venstre != null) {
@@ -303,7 +339,7 @@ public class EksamenSBinTre<T> {
         ///
         return outArray;
     }
-    // 5ii)
+    // 5ii) Seems to be working – maybe run a few more tests.
     static <K> EksamenSBinTre<K> deserialize(ArrayList<K> data, Comparator<? super K> c) {
         //throw new UnsupportedOperationException("Ikke kodet ennå!");
         EksamenSBinTre<K> out = new EksamenSBinTre<K>(c);

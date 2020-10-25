@@ -23,5 +23,7 @@ også fikk en foreldre peker.
 * Oppgave 4: Denne tok en del tid å debugge. Måtte finne en løsning for å avslutte rekursjonen, da den også må fungere 
 for rot-noden. Å sjekke om nåværende node er rot, er dermed ikke et punkt man kan ende på. Gjorde derfor rekursjon bare 
 frem til man befant seg på nest siste node. 
-* Oppgave 5:
+* Oppgave 5: Løsningen til Serialize var basert på notater fra en forelesning jeg hadde tidligere, men med noen mindre 
+endringer for å få det til å fungere. Jeg snubla litt langs veien ved å bruke 'removeLast' da jeg egentlig burde ha 
+brukt 'removeFirst', men dette klarte jeg løse vha. System.out.print()-debugging, og IntelliJ's verktøy.
 * Oppgave 6:
