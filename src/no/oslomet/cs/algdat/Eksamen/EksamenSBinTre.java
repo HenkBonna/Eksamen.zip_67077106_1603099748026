@@ -79,7 +79,7 @@ public class EksamenSBinTre<T> {
     public boolean tom() {
         return antall == 0;
     }
-    // oppgave 1 - finished
+    // Oppgave 1 - finished
     public boolean leggInn(T verdi) {
 
         // Kode hentet fra Programkode 5.2.3 a), fra kompendium av Ulf Utterud
@@ -109,7 +109,7 @@ public class EksamenSBinTre<T> {
 
 
     }
-    // 6i) IKKE gjort noen endringer enda. Foreldrepeker,
+    // Oppgave 6 i) IKKE gjort noen endringer enda. Foreldrepeker,
     public boolean fjern(T verdi) {
         // Kopiert fra kompendium; Programkode 5.2.8 d)
 
@@ -130,8 +130,14 @@ public class EksamenSBinTre<T> {
         {
             Node<T> b = p.venstre != null ? p.venstre : p.høyre;  // b for barn
             if (p == rot) rot = b;
-            else if (p == q.venstre) q.venstre = b;
-            else q.høyre = b;
+            else if (p == q.venstre) {
+                q.venstre = b;
+                b.forelder = q.forelder; // HENRIK
+            }
+            else {
+                q.høyre = b;
+                b.forelder = q.forelder; // HENRIK
+            }
         }
         else  // Tilfelle 3)
         {
@@ -144,16 +150,32 @@ public class EksamenSBinTre<T> {
 
             p.verdi = r.verdi;   // kopierer verdien i r til p
 
-            if (s != p) s.venstre = r.høyre;
-            else s.høyre = r.høyre;
+            if (s != p) {
+                s.forelder = r.forelder;
+                s.venstre = r.høyre;
+            }
+            else {
+                s.forelder = r.forelder;
+                s.høyre = r.høyre;
+                //s.venstre.forelder = s; // HENRIK
+            }
         }
 
         antall--;   // det er nå én node mindre i treet
         return true;
     }
-
+    // Oppgave 6 ii) Ikke gjort
     public int fjernAlle(T verdi) {
-        throw new UnsupportedOperationException("Ikke kodet ennå!");
+        //throw new UnsupportedOperationException("Ikke kodet ennå!");
+        // Teller hvor mange fjernelser som gjøres
+        int count = 0;
+        // Gjør fjerning av verdi helt til man ikke lenger finner verdien som vil fjernes.
+        while(fjern(verdi)){
+            fjern(verdi);
+            count++;
+        }
+        // Returnerer telleren.
+        return count;
     }
     // Oppgave 2 – needs more Main-tests
     public int antall(T verdi) {
@@ -180,7 +202,7 @@ public class EksamenSBinTre<T> {
         return count;
 
     }
-
+    // Oppgave 6 ii)
     public void nullstill() {
         throw new UnsupportedOperationException("Ikke kodet ennå!");
     }
@@ -198,11 +220,6 @@ public class EksamenSBinTre<T> {
     private static <T> Node<T> nestePostorden(Node<T> p) {
         // "Oversatt" beskrivelse fra kompendium til kode
         // Sjekker først om forelderen er null, da er vi på siste, og neste fins ikke.
-
-        // TODO: Error here: rot => forelder as null, not executed
-
-
-        //
         if (p.forelder != null) {
             // Hvis p er høyre barn, er forelderen neste.
             if (p.forelder.høyre == p) return p.forelder;
@@ -304,7 +321,7 @@ public class EksamenSBinTre<T> {
 
 
     }
-    // 5i) seeems to be working fine.
+    // 5i) seeems to be working fine. Remove SysOut
     public ArrayList<T> serialize() {
         // Denne oppgaven ble løst ved å se notater fra en av forelesningene, som omhandlet in-, pre- og postoreden.
 
@@ -339,7 +356,7 @@ public class EksamenSBinTre<T> {
         ///
         return outArray;
     }
-    // 5ii) Seems to be working – maybe run a few more tests.
+    // 5ii) Seems to be working – maybe run a few more tests. Remove SysOut
     static <K> EksamenSBinTre<K> deserialize(ArrayList<K> data, Comparator<? super K> c) {
         //throw new UnsupportedOperationException("Ikke kodet ennå!");
         EksamenSBinTre<K> out = new EksamenSBinTre<K>(c);
