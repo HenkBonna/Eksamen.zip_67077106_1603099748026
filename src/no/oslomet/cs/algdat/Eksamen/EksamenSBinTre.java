@@ -130,6 +130,9 @@ public class EksamenSBinTre<T> {
             Node<T> b = p.venstre != null ? p.venstre : p.høyre;  // b for barn
             if (p == rot) {
                 rot = b;
+                if (b != null){ // Henk if test (1)
+                    rot.forelder = null;
+                }
             }
             else if (p == q.venstre) {
                 if (b != null) { // Henk if test (1)
@@ -137,11 +140,14 @@ public class EksamenSBinTre<T> {
                 }
                 q.venstre = b;
 
-                // (2)
+                // REMOVE THIS
+                /*
                 p.forelder = null;
                 p.verdi = null;
                 p.venstre = null;
                 p.høyre = null;
+
+                 */
                 //
             }
             else {
@@ -150,11 +156,14 @@ public class EksamenSBinTre<T> {
                 }
                 q.høyre = b;
 
-                // (2)
+                // REMOVE THIS
+                /*
                 p.forelder = null;
                 p.verdi = null;
                 p.venstre = null;
                 p.høyre = null;
+
+                 */
                 //
             }
         }
@@ -172,7 +181,6 @@ public class EksamenSBinTre<T> {
             if (s != p) s.venstre = r.høyre;
             else s.høyre = r.høyre;
         }
-
         antall--;   // det er nå én node mindre i treet
         return true;
     }
@@ -184,9 +192,8 @@ public class EksamenSBinTre<T> {
             int count = 0;
             // Gjør fjerning av verdi helt til man ikke lenger finner verdien som vil fjernes.
             while (fjern(verdi)) {
-                fjern(verdi);
-                // TODO: Something seems to be wrong with the counter..
-                count++;
+                    // TODO: Something seems to be wrong with the counter..
+                    count++;
             }
             // Returnerer telleren.
             return count;
