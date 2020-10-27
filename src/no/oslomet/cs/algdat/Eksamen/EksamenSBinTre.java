@@ -109,10 +109,9 @@ public class EksamenSBinTre<T> {
 
 
     }
-    // Oppgave 6 i) IKKE gjort noen endringer enda. Foreldrepeker,
+    // Oppgave 6 i) I don't think it's working yet...
     public boolean fjern(T verdi) {
         // Kopiert fra kompendium; Programkode 5.2.8 d)
-
         if (verdi == null) return false;  // treet har ingen nullverdier
 
         Node<T> p = rot, q = null;   // q skal være forelder til p
@@ -129,17 +128,23 @@ public class EksamenSBinTre<T> {
         if (p.venstre == null || p.høyre == null)  // Tilfelle 1) og 2)
         {
             Node<T> b = p.venstre != null ? p.venstre : p.høyre;  // b for barn
-            if (p == rot) rot = b;
+            if (p == rot) {
+                rot = b;
+            }
             else if (p == q.venstre) {
+                if (b != null) { // Henk if test
+                    b.forelder = q;
+                }
                 q.venstre = b;
-                b.forelder = q.forelder; // HENRIK
             }
             else {
+                if (b != null) { // Henk if test
+                    b.forelder = q;
+                }
                 q.høyre = b;
-                b.forelder = q.forelder; // HENRIK
             }
         }
-        else  // Tilfelle 3)
+        else  // Tilfelle 3) // Henk not done anything yet..
         {
             Node<T> s = p, r = p.høyre;   // finner neste i inorden
             while (r.venstre != null)
@@ -150,15 +155,8 @@ public class EksamenSBinTre<T> {
 
             p.verdi = r.verdi;   // kopierer verdien i r til p
 
-            if (s != p) {
-                s.forelder = r.forelder;
-                s.venstre = r.høyre;
-            }
-            else {
-                s.forelder = r.forelder;
-                s.høyre = r.høyre;
-                //s.venstre.forelder = s; // HENRIK
-            }
+            if (s != p) s.venstre = r.høyre;
+            else s.høyre = r.høyre;
         }
 
         antall--;   // det er nå én node mindre i treet
@@ -167,15 +165,20 @@ public class EksamenSBinTre<T> {
     // Oppgave 6 ii) Ikke gjort
     public int fjernAlle(T verdi) {
         //throw new UnsupportedOperationException("Ikke kodet ennå!");
-        // Teller hvor mange fjernelser som gjøres
-        int count = 0;
-        // Gjør fjerning av verdi helt til man ikke lenger finner verdien som vil fjernes.
-        while(fjern(verdi)){
-            fjern(verdi);
-            count++;
+        if(antall > 0) {
+            // Teller hvor mange fjernelser som gjøres
+            int count = 0;
+            // Gjør fjerning av verdi helt til man ikke lenger finner verdien som vil fjernes.
+            while (fjern(verdi)) {
+                fjern(verdi);
+                count++;
+            }
+            // Returnerer telleren.
+            return count;
         }
-        // Returnerer telleren.
-        return count;
+        else {
+            return 0;
+        }
     }
     // Oppgave 2 – needs more Main-tests
     public int antall(T verdi) {
@@ -204,7 +207,16 @@ public class EksamenSBinTre<T> {
     }
     // Oppgave 6 ii)
     public void nullstill() {
-        throw new UnsupportedOperationException("Ikke kodet ennå!");
+        //throw new UnsupportedOperationException("Ikke kodet ennå!");
+        while(antall > 0){
+            Node<T> current = førstePostorden(rot);
+            current.verdi = null;
+            current.forelder = null;
+            current.venstre = null;
+            current.høyre = null;
+            antall--;
+        }
+
     }
     // Oppgave 3 i) finished
     private static <T> Node<T> førstePostorden(Node<T> p) {
@@ -346,14 +358,6 @@ public class EksamenSBinTre<T> {
             // Legger verdien til current i ArrayList'a
             outArray.add(current.verdi);
         }
-        // debug
-        System.out.println();
-        for (T node : outArray){
-            System.out.print(node + ", ");
-        }
-        System.out.println();
-
-        ///
         return outArray;
     }
     // 5ii) Seems to be working – maybe run a few more tests. Remove SysOut
