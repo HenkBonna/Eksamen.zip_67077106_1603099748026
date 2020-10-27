@@ -132,16 +132,30 @@ public class EksamenSBinTre<T> {
                 rot = b;
             }
             else if (p == q.venstre) {
-                if (b != null) { // Henk if test
+                if (b != null) { // Henk if test (1)
                     b.forelder = q;
                 }
                 q.venstre = b;
+
+                // (2)
+                p.forelder = null;
+                p.verdi = null;
+                p.venstre = null;
+                p.høyre = null;
+                //
             }
             else {
                 if (b != null) { // Henk if test
                     b.forelder = q;
                 }
                 q.høyre = b;
+
+                // (2)
+                p.forelder = null;
+                p.verdi = null;
+                p.venstre = null;
+                p.høyre = null;
+                //
             }
         }
         else  // Tilfelle 3) // Henk not done anything yet..
@@ -171,6 +185,7 @@ public class EksamenSBinTre<T> {
             // Gjør fjerning av verdi helt til man ikke lenger finner verdien som vil fjernes.
             while (fjern(verdi)) {
                 fjern(verdi);
+                // TODO: Something seems to be wrong with the counter..
                 count++;
             }
             // Returnerer telleren.
@@ -216,6 +231,7 @@ public class EksamenSBinTre<T> {
             current.høyre = null;
             antall--;
         }
+        rot = null;
 
     }
     // Oppgave 3 i) finished
