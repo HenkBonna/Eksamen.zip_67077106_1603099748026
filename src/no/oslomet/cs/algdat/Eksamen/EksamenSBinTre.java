@@ -184,15 +184,14 @@ public class EksamenSBinTre<T> {
         antall--;   // det er nå én node mindre i treet
         return true;
     }
-    // Oppgave 6 ii) Ikke gjort
+    // Oppgave 6 ii) STRANGE STUFF
     public int fjernAlle(T verdi) {
-        //throw new UnsupportedOperationException("Ikke kodet ennå!");
+
         if(antall > 0) {
             // Teller hvor mange fjernelser som gjøres
             int count = 0;
-            // Gjør fjerning av verdi helt til man ikke lenger finner verdien som vil fjernes.
+            // Jeg må bare ærlig innrømme at jeg ikke skjønner helt hva jeg gjorde som fikk dette til å fungere, men det gjør tilsynelatende det...
             while (fjern(verdi)) {
-                    // TODO: Something seems to be wrong with the counter..
                     count++;
             }
             // Returnerer telleren.
@@ -204,40 +203,48 @@ public class EksamenSBinTre<T> {
     }
     // Oppgave 2 – needs more Main-tests
     public int antall(T verdi) {
-        //throw new UnsupportedOperationException("Ikke kodet ennå!");
+        // Teller
         int count = 0;
 
         Node<T> current = rot;
-
+        // Mens current ikke er null
         while (current != null){
-            // comparing the values
+            // Sammenligner verdier
             int compRes = comp.compare(verdi, current.verdi);
 
-            // if the comparison returns that verdi < current.verdi, we go left
+            // Hvis sammenligningen gir at verdi < current.verdi, går vi til venstre
             if (compRes < 0){
                 current = current.venstre; // iterate downwards
             }
-            // if the comparison returns that verdi >= current.verdi, we go right
+            // verdi > current.verdi, går til høyre
             if (compRes >= 0){
-                if (current.verdi == verdi) count++;    // we check if the current val is equal, if so add to count
-                current = current.høyre;    // iterate down
+                // Hvis verdien er den samme, øker vi telleren
+                if (current.verdi == verdi) {
+                    count++;
+                }
+                // Itererer nedover
+                current = current.høyre;
             }
         }
-
+        // Returnerer teller
         return count;
 
     }
     // Oppgave 6 ii)
     public void nullstill() {
-        //throw new UnsupportedOperationException("Ikke kodet ennå!");
+        // mens vi har noder i treet
         while(antall > 0){
+            // går vi til første post-orden. Den vil alltid være på bunnen av en gren.
             Node<T> current = førstePostorden(rot);
+            // Null'er alle attributter
             current.verdi = null;
             current.forelder = null;
             current.venstre = null;
             current.høyre = null;
+            // Minimerer antallet
             antall--;
         }
+        // null'er til slutt rotnoden.
         rot = null;
 
     }

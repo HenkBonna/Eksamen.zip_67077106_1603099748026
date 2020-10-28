@@ -26,4 +26,6 @@ frem til man befant seg på nest siste node.
 * Oppgave 5: Løsningen til Serialize var basert på notater fra en forelesning jeg hadde tidligere, men med noen mindre 
 endringer for å få det til å fungere. Jeg snubla litt langs veien ved å bruke 'removeLast' da jeg egentlig burde ha 
 brukt 'removeFirst', men dette klarte jeg løse vha. System.out.print()-debugging, og IntelliJ's verktøy.
-* Oppgave 6:
+* Oppgave 6: Måtte bruke IntelliJ's debugging-verktøy mye for å løse dette, samt skissere opp logikken for binær-
+treet på papir. Fikk alt til slutt til å passere testene, men jeg må si meg usikker på hvordan nøyaktig fjernAlle 
+egentlig får til å bli riktig. Jeg skjønner ikke helt selv hva jeg har gjort – har kommentert dette.
