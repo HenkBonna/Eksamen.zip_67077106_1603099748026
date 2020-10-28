@@ -46,4 +46,5 @@ endringer for å få det til å fungere. Jeg snubla litt langs veien ved å bruk
 brukt 'removeFirst', men dette klarte jeg løse vha. System.out.print()-debugging, og IntelliJ's verktøy.
 * Oppgave 6: Måtte bruke IntelliJ's debugging-verktøy mye for å løse dette, samt skissere opp logikken for binær-
 treet på papir. Fikk alt til slutt til å passere testene, men jeg må si meg usikker på hvordan nøyaktig fjernAlle 
-egentlig får til å bli riktig. Jeg skjønner ikke helt selv hva jeg har gjort – har kommentert dette.
+egentlig får til å bli riktig. Jeg skjønner ikke helt selv hva jeg har gjort – har kommentert dette. Denne oppgaven 
+ble også utført veldig mye tregere enn samtlige andre tester, men den fungerer.
