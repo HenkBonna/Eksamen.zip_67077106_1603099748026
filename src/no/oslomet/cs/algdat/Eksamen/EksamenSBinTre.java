@@ -79,7 +79,7 @@ public class EksamenSBinTre<T> {
     public boolean tom() {
         return antall == 0;
     }
-    // Oppgave 1 - finished
+
     public boolean leggInn(T verdi) {
 
         // Kode hentet fra Programkode 5.2.3 a), fra kompendium av Ulf Utterud
@@ -97,8 +97,8 @@ public class EksamenSBinTre<T> {
         }
 
         // p er nå null, dvs. ute av treet, q er den siste vi passerte
-
-        p = new Node<>(verdi, q);                   // oppretter en ny node // q som forelder
+        // Ensete endring som gjøres etter kopiering er å sette 'q' som forelder i den nye noden
+        p = new Node<>(verdi, q);                   // oppretter en ny node
 
         if (q == null) rot = p;                  // p blir rotnode
         else if (cmp < 0) q.venstre = p;         // venstre barn til q
@@ -109,7 +109,7 @@ public class EksamenSBinTre<T> {
 
 
     }
-    // Oppgave 6 i) I don't think it's working yet...
+
     public boolean fjern(T verdi) {
         // Kopiert fra kompendium; Programkode 5.2.8 d)
         if (verdi == null) return false;  // treet har ingen nullverdier
@@ -130,44 +130,28 @@ public class EksamenSBinTre<T> {
             Node<T> b = p.venstre != null ? p.venstre : p.høyre;  // b for barn
             if (p == rot) {
                 rot = b;
-                if (b != null){ // Henk if test (1)
+                // Dersom b ikke er null, sier vi at rots forelder er null
+                if (b != null){
                     rot.forelder = null;
                 }
             }
             else if (p == q.venstre) {
-                if (b != null) { // Henk if test (1)
+                // Dersom b ikke er null, sier vi at dens forelder er q
+                if (b != null) {
                     b.forelder = q;
                 }
                 q.venstre = b;
 
-                // REMOVE THIS
-                /*
-                p.forelder = null;
-                p.verdi = null;
-                p.venstre = null;
-                p.høyre = null;
-
-                 */
-                //
             }
             else {
-                if (b != null) { // Henk if test
+                // Dersom b ikke er null, sier vi at dens forelder er q
+                if (b != null) {
                     b.forelder = q;
                 }
                 q.høyre = b;
-
-                // REMOVE THIS
-                /*
-                p.forelder = null;
-                p.verdi = null;
-                p.venstre = null;
-                p.høyre = null;
-
-                 */
-                //
             }
         }
-        else  // Tilfelle 3) // Henk not done anything yet..
+        else  // Tilfelle 3)
         {
             Node<T> s = p, r = p.høyre;   // finner neste i inorden
             while (r.venstre != null)
@@ -184,13 +168,13 @@ public class EksamenSBinTre<T> {
         antall--;   // det er nå én node mindre i treet
         return true;
     }
-    // Oppgave 6 ii) STRANGE STUFF
+
     public int fjernAlle(T verdi) {
 
         if(antall > 0) {
             // Teller hvor mange fjernelser som gjøres
             int count = 0;
-            // Jeg må bare ærlig innrømme at jeg ikke skjønner helt hva jeg gjorde som fikk dette til å fungere, men det gjør tilsynelatende det...
+            // Jeg skjønner ikke helt at denne While-løkken fungerer, men etter å endelig å ha fått det til å fungere, tør jeg ikke stille spørsmål :)
             while (fjern(verdi)) {
                     count++;
             }
@@ -201,7 +185,7 @@ public class EksamenSBinTre<T> {
             return 0;
         }
     }
-    // Oppgave 2 – needs more Main-tests
+
     public int antall(T verdi) {
         // Teller
         int count = 0;
@@ -230,7 +214,7 @@ public class EksamenSBinTre<T> {
         return count;
 
     }
-    // Oppgave 6 ii)
+
     public void nullstill() {
         // mens vi har noder i treet
         while(antall > 0){
@@ -248,7 +232,7 @@ public class EksamenSBinTre<T> {
         rot = null;
 
     }
-    // Oppgave 3 i) finished
+
     private static <T> Node<T> førstePostorden(Node<T> p) {
 
         // Kildekode hentet fra Kompendium: Programkode 5.1.7 h)
@@ -258,9 +242,9 @@ public class EksamenSBinTre<T> {
             else return p;
         }
     }
-    // Oppgave 3 ii) thought finished, unsure if working...
+
     private static <T> Node<T> nestePostorden(Node<T> p) {
-        // "Oversatt" beskrivelse fra kompendium til kode
+
         // Sjekker først om forelderen er null, da er vi på siste, og neste fins ikke.
         if (p.forelder != null) {
             // Hvis p er høyre barn, er forelderen neste.
@@ -276,13 +260,8 @@ public class EksamenSBinTre<T> {
         // Hvis alle over feiler, er forelder lik 'null', så vi har ingen neste.
         return null;
     }
-    // Oppgave 4 i) seems to be working
+
     public void postorden(Oppgave<? super T> oppgave) {
-
-
-        //throw new UnsupportedOperationException("Ikke kodet ennå!");
-
-        // Skal løses ikke-rekursivt, og skal bruke nestePostorden
 
         // Finner startNoden, vha. førstePostOrden
         Node<T> current = førstePostorden(rot);
@@ -295,23 +274,13 @@ public class EksamenSBinTre<T> {
             current = nestePostorden(current);
             oppgave.utførOppgave(current.verdi);
         }
-
-
-        // Utfører oppgaven på rotnoden. REMOVING THIS SEEMS TO FIX IT
-        //oppgave.utførOppgave(current.verdi);
-
-
-            // Gjør oppgaven på siste node
-
-
     }
 
     public void postordenRecursive(Oppgave<? super T> oppgave) {
         postordenRecursive(rot, oppgave);
     }
-    // Oppgave 4 ii) seems to be working
+
     private void postordenRecursive(Node<T> p, Oppgave<? super T> oppgave) {
-        //throw new UnsupportedOperationException("Ikke kodet ennå!");
 
         // Hvis vi befinner oss i rot, rekurserer vi med førstePostorden.
         if (p.forelder == null){
@@ -330,41 +299,11 @@ public class EksamenSBinTre<T> {
                 // Mangler derfor bare å utføre oppgaven på siste node (rot-noden) før vi kan slutte
                 oppgave.utførOppgave(rot.verdi);
             }
-
         }
-
-
-        /* Working, but looping after doing it.
-        if(p.forelder != null){
-            oppgave.utførOppgave(p.verdi);
-            postordenRecursive(nestePostorden(p),oppgave);
-        }
-
-        else{
-            postordenRecursive(førstePostorden(p),oppgave);
-            //oppgave.utførOppgave(p.verdi);
-        }
-         */
-
-        /* Working, but looping after doing it.
-        if(p.forelder == null){
-            postordenRecursive(førstePostorden(p),oppgave);
-            //oppgave.utførOppgave(p.verdi);
-        }
-
-        else{
-            oppgave.utførOppgave(p.verdi);
-            postordenRecursive(nestePostorden(p),oppgave);
-        }
-
-         */
-
-
-
-
     }
-    // 5i) seeems to be working fine. Remove SysOut
+
     public ArrayList<T> serialize() {
+
         // Denne oppgaven ble løst ved å se notater fra en av forelesningene, som omhandlet in-, pre- og postoreden.
 
         // Initialiserer ArrayListen
@@ -390,11 +329,12 @@ public class EksamenSBinTre<T> {
         }
         return outArray;
     }
-    // 5ii) Seems to be working – maybe run a few more tests. Remove SysOut
+
     static <K> EksamenSBinTre<K> deserialize(ArrayList<K> data, Comparator<? super K> c) {
-        //throw new UnsupportedOperationException("Ikke kodet ennå!");
-        EksamenSBinTre<K> out = new EksamenSBinTre<K>(c);
-        //out.rot = new Node<K>(data.get(0), null, null, null);
+
+        // Initialiserer et nytt tre
+        EksamenSBinTre<K> out = new EksamenSBinTre<>(c);
+        // Legger inn datapunktene fra data
         for (K value : data){
             out.leggInn(value);
         }
@@ -402,4 +342,4 @@ public class EksamenSBinTre<T> {
     }
 
 
-} // ObligSBinTre
+} //
